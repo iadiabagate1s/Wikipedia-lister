@@ -1,5 +1,5 @@
 import { User, Search, db } from './schema/index.js';
-import bcrypt from 'bcrypt';
+import argon2 from 'argon2';
 
 const seedData = async () => {
   console.log('Seeding data...');
@@ -8,7 +8,7 @@ const seedData = async () => {
 
     const user = await User.create({
       email: 'test@example.com',
-      password: bcrypt.hashSync('password', 10),
+      password: await argon2.hash('password'),
     });
 
     await Search.create({

@@ -1,4 +1,4 @@
-import bcrypt, { hash } from 'bcrypt'; // Importing bcrypt for password hashing
+import argon2 from 'argon2'; // Importing argon2 for password hashing
 import { getUserLoginQuery, getUserObjectQuery, deleteUserQuery, createUserQuery, getAllUsersQuery } from '../../db/queries/userQueries.js';
 
 
@@ -13,7 +13,7 @@ async function getUserLogin(req, res) {
         if (!user) {
             return res.status(404).send({ message: 'User not found' });
         }
-        if (!bcrypt.compareSync(password, user.password)) {
+        if (! await argon2.verify(user.password,password)) {
             return res.status(401).send({ message: 'Incorrect password' });
         }
 
@@ -52,14 +52,13 @@ async function createUser(req, res) {
     try{
     const { email, password } = req.body;
 
-    const hashPassword = bcrypt.hashSync(password, 10);
+    const hashPassword = await argon2.hash(password);
 
     const user = await createUserQuery(email, hashPassword);
 
     const userObject = await getUserObjectQuery(email);
 
     // remove password from response
-    // Convert user instance to plain object and remove password
     const userResponse = userObject.toJSON();
     delete userResponse.password;
     

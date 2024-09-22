@@ -7,7 +7,7 @@ export const login = async (email, password) => {
         email,
         password,
         }, {
-            withCredentials: true,  // Include credentials if needed
+            withCredentials: true,
           });
     
         return response.data;
@@ -22,7 +22,7 @@ export const register = async (email, password) => {
         email,
         password,
         }, {
-            withCredentials: true,  // Include credentials if needed
+            withCredentials: true,
           });
     
         return response.data;

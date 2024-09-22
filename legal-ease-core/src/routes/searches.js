@@ -10,14 +10,11 @@ import {
 
 const router = Router();    
 
-
-
-
 router.get('/user/:userId', getSearchesByUser);
-router.get('/:email', search);
-router.get('/', getAllSearches);
-router.delete('/searchItemId/:searchItemId', deleteUserSearchItem);
-router.delete('/user/:userId', clearAllSearchesForUser);
+router.get('/:email', search); //read
+router.get('/', getAllSearches);// read(all)
+router.delete('/:searchItemId', deleteUserSearchItem); //delete
+router.delete('/user/:userId', clearAllSearchesForUser); //delete
 
 
 export { router as searchRouter};

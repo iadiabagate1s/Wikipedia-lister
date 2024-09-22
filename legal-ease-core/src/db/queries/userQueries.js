@@ -87,7 +87,7 @@ export async function getAllUsersQuery() {
 
     try {
         const users = await User.findAll({
-            attributes: ['id', 'email', 'created_at'],
+            attributes: ['email', 'created_at'],
         });
         return users;
     }

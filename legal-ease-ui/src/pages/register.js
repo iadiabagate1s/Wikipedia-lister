@@ -6,7 +6,7 @@ import { AuthContext } from '../services/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 function Register() {
-const { setLoggedInUser, user } = useContext(AuthContext);
+  const { setLoggedInUser, user } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,7 +27,6 @@ const { setLoggedInUser, user } = useContext(AuthContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic client-side validation
     if (!passwordsMatch) {
       setError('Passwords do not match');
       return;
@@ -40,7 +39,7 @@ const { setLoggedInUser, user } = useContext(AuthContext);
       setError(null);  // Clear any previous errors
 
       setLoggedInUser(response);
-    navigate('/home');
+      navigate('/home');
     } catch (error) {
       console.error(error);
       setError(error.response?.data?.message || 'Registration failed');

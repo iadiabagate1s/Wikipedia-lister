@@ -1,22 +1,20 @@
 import fetch from 'node-fetch';
 import { userExistQuery } from '../../db/queries/userQueries.js';
 import { createSearchQuery, getAllSearchesQuery, softDeleteSearchQuery ,getSearchesByUserQuery, softDeleteUserSearches } from '../../db/queries/searchQueries.js';
+import { normalizeQuery, groupQueriesByFrequency } from '../../utils.js';
 
 
 
 export const search = async (req, res) => {
     try{
-    // /:email?query=apple
+
     const { email } = req.params;
     const { query } = req.query;
-    // check if user exists
+
     const doesExist = await userExistQuery(email);  
     if (!doesExist) {
         return res.status(404).send({ message: 'User not found' });
     }
-
-    // search for query
-    // https://en.wikipedia.org/w/rest.php/v1/search/page?q=apple&limit=25
 
     const url = `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${query}&limit=25`;
     const response = await fetch(url);
@@ -43,7 +41,13 @@ try{
 
     const searches = await getAllSearchesQuery();
 
-    res.status(200).send(searches);
+    const frequency = groupQueriesByFrequency(searches);
+
+    res.status(200).send({
+        searches, 
+        frequency,
+        message: 'All searches retrieved successfully',
+    });
 }
 catch (err) {
     console.error('Error getting all searches:', err);

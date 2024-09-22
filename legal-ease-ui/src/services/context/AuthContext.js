@@ -7,14 +7,6 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Load user data from localStorage if available
-  // useEffect(() => {
-  //   // const storedUser = JSON.parse(localStorage.getItem('user'));
-  //   // if (storedUser) {
-  //     setUser(storedUser);
-  //   // }
-  // }, []);
-
   // Function to log in the user
   const setLoggedInUser = (userData) => {
     setUser(userData);

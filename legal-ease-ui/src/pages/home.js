@@ -5,8 +5,6 @@ import { search, removeSearchHistoryItemAPI, clearAllSearchHistoryAPI } from '..
 import { useNavigate } from 'react-router-dom';
 import './home.css'; 
 
-
-
 function Home() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -15,7 +13,6 @@ function Home() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchHistory, setSearchHistory] = useState(user?.searches || []);
   const [error, setError] = useState(null);
-  const [historyVisible, setHistoryVisible] = useState(true);  // Search history is always visible
   
   useEffect(() => {
     if (!user) {
@@ -24,13 +21,9 @@ function Home() {
   }, [user, navigate]);
 
 
-  // Prevent the component from rendering if there is no user
   if (!user) {
     return null;  // This ensures that nothing is rendered if the user is null
   }
-
-
-
 
   const handleSearch = async () => {
     try {
@@ -49,7 +42,6 @@ function Home() {
   };
 
   const removeSearchHistoryItem = async (id) => {
-    // setSearchHistory(searchHistory.filter(record => record.id !== id));
     let res = await removeSearchHistoryItemAPI(id);
     res ? setSearchHistory(searchHistory.filter(record => record.id !== id)): setError('Failed to remove search history item');
   };
@@ -69,7 +61,6 @@ const searchAgain = async (record)=>{
     <Container className="home-container">
       <Row className="justify-content-center mt-3">
         <Col md={8}>
-          {/* Sticky Search Bar */}
           <div className="sticky-search-bar">
             <h3 className="mb-4">Welcome, {user.email}</h3>
             <InputGroup className="mb-3">
@@ -88,12 +79,11 @@ const searchAgain = async (record)=>{
             {error && <Alert variant="danger">{error}</Alert>}
           </div>
 
-          {/* Display Search Results */}
           <div className="search-results-section">
             <h4>Search Results:</h4>
             <ListGroup className="search-results-list">
-              {searchResults.map((result) => (
-                <ListGroup.Item key={result.id} className="search-result-item">
+              {searchResults.map((result, index) => (
+                <ListGroup.Item key={result.id || index} className="search-result-item">
                   <a href={`https://example.com/pages/${result.id}`} target="_blank" rel="noopener noreferrer" className="result-link">
                     <h5>{result.title}</h5>
                   </a>
@@ -104,7 +94,6 @@ const searchAgain = async (record)=>{
           </div>
         </Col>
 
-        {/* Search History Sidebar */}
         <Col md={4} className="sticky-sidebar">
           <div className="search-history-section">
             <div className="d-flex justify-content-between align-items-center">
@@ -112,8 +101,8 @@ const searchAgain = async (record)=>{
               <Button variant="outline-danger" size="sm" onClick={clearAllSearchHistoy}>Clear All</Button>
             </div>
             <ListGroup className="search-history-list">
-              {searchHistory.map((record) => (
-                <ListGroup.Item key={record.id} className="d-flex justify-content-between align-items-center">
+              {searchHistory.map((record, index) => (
+                <ListGroup.Item key={record.id || index}  className="d-flex justify-content-between align-items-center">
                   <div>
                     <p>Query: {record.query} (Searched at: {new Date(record.created_at).toLocaleString()})</p>
                     <Button variant="link" size="sm" onClick={() => searchAgain(record.query)}>Search Again</Button>

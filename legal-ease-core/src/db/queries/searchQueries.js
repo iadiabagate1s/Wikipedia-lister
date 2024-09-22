@@ -18,12 +18,12 @@ export async function getAllSearchesQuery() {
 
     try{
         let searches = await Search.findAll({
+            attributes: ['id', 'query', 'created_at'],
             include: {
                 model: User,
                 as: 'user',
                 attributes: ['email'],
             },
-            group: ['user_id'],
         });
         return searches;
     }

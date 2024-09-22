@@ -10,7 +10,7 @@ RUN apk add --no-cache bash
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies, including bcrypt
+# Install dependencies
 RUN npm install
 
 # Copy the rest of the application code
