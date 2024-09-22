@@ -18,7 +18,7 @@ export async function getAllSearchesQuery() {
 
     try{
         let searches = await Search.findAll({
-            attributes: ['id', 'query', 'created_at'],
+            attributes: ['id', 'query', 'created_at', 'deleted_at'],
             include: {
                 model: User,
                 as: 'user',

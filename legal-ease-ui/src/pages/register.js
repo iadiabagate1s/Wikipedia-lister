@@ -51,7 +51,6 @@ function Register() {
     <Container>
       <Row className="justify-content-md-center">
         <Col md="6">
-          <h2>Register</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {success && <Alert variant="success">Registration successful! You can now log in.</Alert>}
 

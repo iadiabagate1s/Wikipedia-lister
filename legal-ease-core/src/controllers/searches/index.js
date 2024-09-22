@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import { userExistQuery } from '../../db/queries/userQueries.js';
 import { createSearchQuery, getAllSearchesQuery, softDeleteSearchQuery ,getSearchesByUserQuery, softDeleteUserSearches } from '../../db/queries/searchQueries.js';
 import { normalizeQuery, groupQueriesByFrequency } from '../../utils.js';
+import { searchWikipedia } from '../../external-api-calls/wiki.js';
 
 
 
@@ -16,8 +17,8 @@ export const search = async (req, res) => {
         return res.status(404).send({ message: 'User not found' });
     }
 
-    const url = `https://en.wikipedia.org/w/rest.php/v1/search/page?q=${query}&limit=25`;
-    const response = await fetch(url);
+    let response = await searchWikipedia(query);
+   
     const data = await response.json();
 
     const searchRecord = await createSearchQuery(email, query);

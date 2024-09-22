@@ -37,7 +37,7 @@ const { setLoggedInUser, user } = useContext(AuthContext);
     <Container>
     <Row className="justify-content-md-center">
       <Col md="6">
-        <h2>Login</h2>
+
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">

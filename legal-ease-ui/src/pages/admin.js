@@ -56,6 +56,7 @@ const Admin = () => {
                 <th>Email</th>
                 <th>Created At</th>
                 <th>Actions</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -114,6 +115,7 @@ const Admin = () => {
                 <th>Query</th>
                 <th>User Email</th>
                 <th>Created At</th>
+                <th>Deleted At</th>
               </tr>
             </thead>
             <tbody>
@@ -122,6 +124,7 @@ const Admin = () => {
                   <td>{search.query || 'No query'}</td>
                   <td>{search.user.email}</td>
                   <td>{new Date(search.created_at).toLocaleString()}</td>
+                  <td>{search.deleted_at ? new Date(search.deleted_at).toLocaleString() : '-'}</td>
                 </tr>
               ))}
             </tbody>
