@@ -1,0 +1,14 @@
+# Ignore .env files
+.env
+legal-ease-core/.env
+legal-ease-ui/.env
+
+
+
+# Ignore node_modules folders
+legal-ease-core/node_modules
+legal-ease-ui/node_modules
+
+
+# Other ignored files
+.DS_Store

@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./legal-ease-core  # Path to the backend folder
+    container_name: legal-ease-backend
+    ports:
+      - "5001:5000"
+    env_file:
+      - ./legal-ease-core/.env
+    depends_on:
+      - db
+    command: ["./wait-for-it.sh", "db:3306", "--", "npm", "start"]
+    networks:
+      - app-network
+
+  frontend:
+    build: ./legal-ease-ui  # Path to the frontend folder
+    container_name: legal-ease-frontend
+    ports:
+      - "3000:80"
+    env_file:
+      - ./legal-ease-ui/.env
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d/  # Your SQL scripts go here
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

@@ -1,0 +1,79 @@
+/* Home.css */
+
+/* Sticky search bar */
+.sticky-search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Sticky search history sidebar */
+.sticky-sidebar {
+  position: sticky;
+  top: 0;
+  padding: 15px;
+  border-left: 1px solid #ddd;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+/* Styling search results */
+.search-results-list .search-result-item {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.search-results-list .search-result-item:hover {
+  background-color: #f7f7f7;
+}
+
+.search-results-list .result-link {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.search-results-list .result-link:hover {
+  text-decoration: underline;
+}
+
+/* Styling search history */
+.search-history-list .list-group-item {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.search-history-list .list-group-item .btn {
+  margin-left: 10px;
+}
+
+.sticky-sidebar .btn-link {
+  padding: 0;
+}
+
+.clear-all-btn {
+  margin-bottom: 15px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .sticky-sidebar {
+    position: relative;
+    height: auto;
+    padding: 10px;
+  }
+
+  .sticky-search-bar {
+    padding: 10px;
+  }
+
+  .search-results-section {
+    margin-top: 20px;
+  }
+}
